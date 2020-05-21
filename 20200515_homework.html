@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+    <title>양초 쇼핑몰</title>
+    <!-- JQuery를 import 합니다 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--CSS-->
+    <style>
+        *{
+            font-family: 'Gamja Flower', cursive;
+        }
+        .wrap{
+            width: 500px;
+            margin: auto;
+        }
+        .image img{
+            margin: auto;
+            display: block;
+        }
+        .button button{
+            margin: auto;
+            display: block;
+        }
+        .exchange{
+            color:blue;
+        }
+    </style>
+    <script>
+        function check_blank() {
+            if ($('#input_name').val()==''){
+                alert("이름을 입력하세요");
+            }
+            else if ($('#inputGroupSelect01').val() =="--수량을 선택하세요--"){
+                alert("수량을 입력하세요");
+            }
+            else if ($('#input_addr').val()==''){
+                alert("주소를 입력하세요");
+            }
+            else if ($('#phone_num').val()==''){
+                alert("전화번호를 입력하세요");
+            }
+        }
+        $(document).ready(function(){
+            alert("로딩 완료");
+            $.ajax({
+                type: "GET",
+                url: "https://api.manana.kr/exchange/rate.json",
+                data: {},
+                success: function(response){
+                    exchange_rate = response[1]["rate"];
+                    html_code = `원-달러 환율 ${exchange_rate}`;
+                    $('#exchange_popup').append(html_code);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="image">
+            <img src="https://image.kyobobook.co.kr/newimages/giftshop_new/goods/400/1576/A201503051354385922.jpg">
+        </div><br>
+        <div>
+            <h1><b>양초를 팝니다</b><font size = 2px>&nbsp&nbsp&nbsp&nbsp가격 : 1,000원/개</font></h1>
+            <p>이 양초는 사실 특별한 힘을 가지고 있어요. 양초를 켜고 소원일 빌면 짜자잔 뭐든지 이뤄지게 된답니다. 하나 사가세요! 대나무향이 아주 좋아요</p>
+        </div>
+        <div class="exchange" id="exchange_popup"></div>
+        <div>
+            <h3>주문하기</h3>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">주문자 이름</span>
+                </div>
+                <input type="text" class="form-control" id="input_name" placeholder="예) 홍길동" aria-label="Username" aria-describedby="basic-addon1">                
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">수량</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option selected id="input_select">--수량을 선택하세요--</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">주소</span>
+                </div>
+                <input type="text" id="input_addr" class="form-control" placeholder="예) 서울시 영등포구 영등포동 " aria-label="address"" aria-describedby="basic-addon1">                
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">전화번호</span>
+                </div>
+                <input type="text" class="form-control" id="phone_num" placeholder="예) 010-1234-1234" aria-label="phonenumber" aria-describedby="basic-addon1">                
+            </div>
+            <div class="button">
+                <button type="button" class="btn btn-primary btn-lg" onclick="check_blank()">주문하기</button>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
