@@ -20,11 +20,10 @@ for song in songs:
     rank = song.select_one('td.number')
     subject = song.select_one('td.info > a.title.ellipsis')
     name = song.select_one('td.info > a.artist.ellipsis')
-    a = rank.text.strip().splitlines()[0]
+    # a = rank.text.strip().splitlines()[0]
+    a = rank.text.split()[0].strip()
     b = subject.text.strip().splitlines()[0]
     c = name.text.strip().splitlines()[0]
-
     db.song.insert_one({'rank':a, 'subject':b, 'name':c})
-
 
 
